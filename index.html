@@ -21,44 +21,64 @@
   </head>
 
   <body onload="init()">
+    
     <nav class="navbar bg-body-tertiary">
       <div class="container-fluid">
         <a class="navbar-brand" href="index.html">QuizApp</a>
       </div>
     </nav>
-
+    <div class="progress-bar" id="progressBar" role="progressbar"></div>
     <div class="container">
-      <div class="card" style="width: 18rem">
-        <img src="/img/logo.png" alt="" />
+      <div class="card quiz-card selectCard">
+        <div class="selectImage"><img src="/img/logo.png" alt="" /></div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">HTML</li>
           <li class="list-group-item">CSS</li>
           <li class="list-group-item">JavaScript</li>
         </ul>
       </div>
+      <div class="card quiz-card" id="endScreen" style="display: none">
+        <div>
+          <img src="/img/brain result.png" />
+          <h5>
+            Complete <br />
+            HTML QUIZ
+          </h5>
+        </div>
+        <div>
+          <p>
+            Your Score: <b id="rightQuestion"></b>/<b
+              id="amaountOfQuestions"
+            ></b>
+          </p>
+        </div>
+        <button class="btn btn-primary" onclick="restartGame()">Restart</button>
+      </div>
+      <div class="card quiz-card card-body" id="questionBody">
+        <h5 class="card-title" id="questionText">Frage</h5>
 
-      <div class="card quiz-card">
-        <div class="card-body">
-          <h5 class="card-title" id="questionText">Frage</h5>
+        <div class="card answer-card mb-2" onclick="answer('answer_1')">
+          <div class="card-body" id="answer_1">Antwort</div>
+        </div>
 
-          <div class="card answer-card mb-2" onclick="answer('answer_1')">
-            <div class="card-body" id="answer_1">Antwort</div>
+        <div class="card answer-card mb-2" onclick="answer('answer_2')">
+          <div class="card-body" id="answer_2">Antwort</div>
+        </div>
+
+        <div class="card answer-card mb-2" onclick="answer('answer_3')">
+          <div class="card-body" id="answer_3">Antwort</div>
+        </div>
+
+        <div class="card answer-card mb-2" onclick="answer('answer_4')">
+          <div class="card-body" id="answer_4">Antwort</div>
+        </div>
+
+        <div class="buttonNav">
+          <div onclick="removeQuestion()">
+            <img id="remove-button" src="/img/left.png" />
           </div>
-
-          <div class="card answer-card mb-2" onclick="answer('answer_2')">
-            <div class="card-body" id="answer_2">Antwort</div>
-          </div>
-
-          <div class="card answer-card mb-2" onclick="answer('answer_3')">
-            <div class="card-body" id="answer_3">Antwort</div>
-          </div>
-
-          <div class="card answer-card mb-2" onclick="answer('answer_4')">
-            <div class="card-body" id="answer_4">Antwort</div>
-          </div>
-          <div class="buttonNav">
-            <img id="remove-button" disabled src="/img/left.png" />
-            <img id="next-button" disabled src="/img/right.png" />
+          <div onclick="nextQuestion()">
+            <img id="next-button" src="/img/right.png" />
           </div>
         </div>
       </div>

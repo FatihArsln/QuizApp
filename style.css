@@ -1,18 +1,23 @@
 body {
-  background-color: #007aff !important;
+  background-color: blue !important;
 }
 
 .container {
-  min-height: 100vh;
-  background-color: #007aff !important;
+ 
+  max-width: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  padding-top: 100px;
+  
 }
 
 .quiz-card {
   width: 30rem;
 }
+.quiz-card img{
+  width: 100px;
+}
+
 .buttonNav {
   display: flex;
   justify-content: space-between;
@@ -30,4 +35,29 @@ body {
 
 .bg-success{
     color: white;
+}
+
+.result-head img{
+  width: 60px;
+}
+
+.progress-bar{
+
+  background-color: rgb(199, 238, 199) !important;
+}
+
+.selectCard{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: darkblue !important;
+  max-width: 170px;
+}
+
+.list-group-item{
+  color: white !important;
+  margin-top: 8px;
+  border: none !important;
+  background-color: darkblue !important;
 }
