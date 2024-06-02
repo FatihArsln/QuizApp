@@ -1,4 +1,4 @@
-let questions = [
+let quizzQuestions = [
     {
         "question": "Wer hat HTML erfunden?",
         "answer_1": "Robbie Williams",
@@ -62,11 +62,13 @@ let questions = [
         "answer_3": "stylesheet>style.css</stylesheet",
         "answer_4": "css href='style.css'",
         "right_answer": 1
-    }
+    },
 ];
 
 let currentQuestion = 0;
 let rightQuestions = 0;
+let audio_sucsess = new Audio('audio/right.mp3');
+let audio_fail = new Audio('audio/wrong.mp3');
 
 
 function init() {
@@ -74,7 +76,7 @@ function init() {
 }
 
 function showQuestion() {
-    let question = questions[currentQuestion];
+    let question = quizzQuestions[currentQuestion];
 
     document.getElementById('questionText').innerHTML = question['question'];
     document.getElementById('answer_1').innerHTML = question['answer_1'];
@@ -85,23 +87,21 @@ function showQuestion() {
 
 
 function answer(selection) {
-    let question = questions[currentQuestion];  // holt die erste Variabele aus dem Jason.
+    let question = quizzQuestions[currentQuestion++];  // holt die erste Variabele aus dem Jason.
     console.log("Selection answer is " + selection); // selection ist die angelickte antwort
     let selectedQuestionNumber = selection.slice(-1); // holt den letzden Buchstaben wer aus dem text in HTML.
-    console.log('selectedQuestionNumber is ', selectedQuestionNumber); // hier wird der letzde Buchstabe angezeigt
-    console.log('Current question is', question['right_answer']); // zeigt an welche antwort richtig ist
-
-
+    // console.log('selectedQuestionNumber is ', selectedQuestionNumber); // hier wird der letzde Buchstabe angezeigt
+    // console.log('Current question is', question['right_answer']); // zeigt an welche antwort richtig ist
     let idOfRightAnswer = `answer_${question['right_answer']}`;
 
     if (selectedQuestionNumber == question['right_answer']) { // hier wird der angeklickte  letzde Buchstabe  verglichen mit dem string in jason
-        console.log('Richtig');
         document.getElementById(idOfRightAnswer).parentNode.classList.add('bg-success');// ändert die farbe des buttons nachdem eine antwort angeklickt wurde.
         rightQuestions++;
+        audio_sucsess.play();
     } else {
-        console.log('Falsch');
-        document.getElementById(selection).parentNode.classList.add('bg-danger');
-        document.getElementById(idOfRightAnswer).parentNode.classList.add('bg-success');
+        document.getElementById(selection).parentNode.classList.add('bg-danger'); //Falsche Antwort anzeigen
+        document.getElementById(idOfRightAnswer).parentNode.classList.add('bg-success'); //zeigt die richtige antwort an
+        audio_fail.play();
     }
     document.getElementById('next-button').disabled = false;
     document.getElementById('remove-button').disabled = false;
@@ -109,20 +109,10 @@ function answer(selection) {
 }
 
 function nextQuestion() {
-    // Show End Screen
-    if (currentQuestion >= questions.length) {
-        document.getElementById('endScreen').style = '';
-        document.getElementById('questionBody').style = 'display: none';
-
-        document.getElementById('amaountOfQuestions').innerHTML = questions.length;
-        document.getElementById('rightQuestion').innerHTML = rightQuestions;
+    if (currentQuestion >= quizzQuestions.length) {
+        showEndScreen();
     } else { // Show question
-
-        let percent = (currentQuestion + 1) / questions.length;
-        percent = Math.round(percent * 100);
-
-        document.getElementById('progressBar').innerHTML = `${percent}%`;
-        document.getElementById('progressBar').style = `width:${percent}%;`;
+        percentBar();
 
         currentQuestion++;  // z.b von 0 auf 1
         document.getElementById('next-button').disabled = true;
@@ -130,6 +120,22 @@ function nextQuestion() {
         resetClassListAnswer();
         showQuestion();
     }
+}
+
+function percentBar() {
+    let percent = (currentQuestion + 1) / quizzQuestions.length;
+    percent = Math.round(percent * 100);
+
+    document.getElementById('progressBar').innerHTML = `${percent}%`;
+    document.getElementById('progressBar').style = `width:${percent}%;`;
+}
+
+function showEndScreen() {
+    document.getElementById('endScreen').style = '';
+    document.getElementById('questionBody').style = 'display: none';
+
+    document.getElementById('amaountOfQuestions').innerHTML = quizzQuestions.length;
+    document.getElementById('rightQuestion').innerHTML = rightQuestions;
 }
 
 function removeQuestion() {
@@ -149,7 +155,7 @@ function resetClassListAnswer() {
 }
 
 function restartGame() {
-    
+
     document.getElementById('endScreen').style = 'display: none';
     document.getElementById('questionBody').style = '';
     currentQuestion = 0;
